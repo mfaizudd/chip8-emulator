@@ -4,7 +4,7 @@ const unsigned int FONTSET_START_ADDRESS = 0x50;
 
 Chip8::Chip8() : randGen(std::chrono::system_clock::now().time_since_epoch().count())
 {
-    pc = START_ADDRESS;
+    programCounter = START_ADDRESS;
 
     for (unsigned int i = 0; i < FONTSET_SIZE; ++i)
     {
@@ -31,4 +31,31 @@ void Chip8::LoadROM(char const* filename)
         }
         delete[] buffer;
     }
+}
+
+
+void Chip8::OP_00E0()
+{
+    memset(video, 0, sizeof(video));
+}
+
+void Chip8::OP_00EE()
+{
+    --stackPointer;
+    programCounter = stack[stackPointer];
+}
+
+void Chip8::OP_1NNN()
+{
+    uint16_t address = opcode & 0x0FFFu;
+
+    programCounter = address;
+}
+
+void Chip8::OP_2NNN()
+{
+    uint16_t address = opcode & 0x0FFFu;
+
+    stack[stackPointer] = programCounter;
+    ++stackPointer;
 }
