@@ -59,3 +59,110 @@ void Chip8::OP_2NNN()
     stack[stackPointer] = programCounter;
     ++stackPointer;
 }
+
+void Chip8::OP_3XKK()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t byte = opcode & 0x00FFu;
+    if (registers[Vx] == byte)
+    {
+        programCounter += 2;
+    }
+}
+
+void Chip8::OP_4XKK()
+{
+    uint8_t Vx = (opcode & 0xF00u) >> 8u;
+    uint8_t byte = opcode & 0x00Fu;
+
+    if (registers[Vx] != byte)
+    {
+        programCounter += 2;
+    }
+}
+
+void Chip8::OP_5XY0()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t Vy = (opcode & 0x00F0u) >> 4u;
+
+    if (registers[Vx] == registers[Vy])
+    {
+        programCounter += 2;
+    }
+}
+
+void Chip8::OP_6XKK()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t byte = opcode & 0x00FFu;
+    
+    registers[Vx] = byte;
+}
+
+void Chip8::OP_6XKK()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t byte = opcode & 0x00FFu;
+    
+    registers[Vx] = byte;
+}
+
+void Chip8::OP_7XKK()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t byte = opcode & 0x00FFu;
+
+    registers[Vx] += byte;
+}
+
+void Chip8::OP_8XY0()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t Vy = (opcode & 0x00F0u) >> 4u;
+
+    registers[Vx] = registers[Vy];
+}
+
+void Chip8::OP_8XY1()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t Vy = (opcode & 0x00F0u) >> 4u;
+
+    registers[Vx] |= registers[Vy];
+}
+
+void Chip8::OP_8XY2()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t Vy = (opcode & 0x00F0u) >> 4u;
+
+    registers[Vx] &= registers[Vy];
+}
+
+void Chip8::OP_8XY3()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t Vy = (opcode & 0x00F0u) >> 4u;
+
+    registers[Vx] ^= registers[Vy];
+}
+
+void Chip8::OP_8XY4()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t Vy = (opcode & 0x00F0u) >> 4u;
+
+    uint16_t sum = registers[Vx] + registers[Vy];
+
+    if (sum > 255u)
+    {
+        registers[0xF] = 1;
+    }
+    else
+    {
+        registers[0xF] = 0;
+    }
+
+    registers[Vx] = sum & 0xFFu;
+}
