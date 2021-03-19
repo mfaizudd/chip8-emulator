@@ -35,6 +35,7 @@ public:
     void OP_8XY2();
     void OP_8XY3();
     void OP_8XY4();
+    void OP_8XY5();
     
 private:
     const unsigned int START_ADDRESS = 0x200;

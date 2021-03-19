@@ -166,3 +166,21 @@ void Chip8::OP_8XY4()
 
     registers[Vx] = sum & 0xFFu;
 }
+
+void Chip8::OP_8XY5()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t Vy = (opcode & 0x00F0u) >> 4u;
+
+    if (registers[Vx] > registers[Vy])
+    {
+        registers[0xF] = 1;
+    }
+    else
+    {
+        registers[0xF] = 0;
+    }
+
+    registers[Vx] -= registers[Vy];
+}
+
