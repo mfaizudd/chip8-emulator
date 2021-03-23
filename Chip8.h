@@ -38,6 +38,12 @@ public:
     void OP_8XY5();
     void OP_8XY6();
     void OP_8XY7();
+    void OP_8XYE();
+    void OP_9XY0();
+    void OP_ANNN();
+    void OP_BNNN();
+    void OP_CXKK();
+    // DXYN
     
 private:
     const unsigned int START_ADDRESS = 0x200;

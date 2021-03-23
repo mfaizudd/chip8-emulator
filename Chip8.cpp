@@ -209,3 +209,45 @@ void Chip8::OP_8XY7()
 
     registers[Vx] = registers[Vy] - registers[Vx];
 }
+
+void Chip8::OP_8XYE()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    
+    registers [0xF] = (registers[Vx] & 0x80u) >> 7u;
+
+    registers[Vx] <<= 1;
+}
+
+void Chip8::OP_9XY0()
+{
+    uint8_t Vx = (opcode & 0x0F00) >> 8u;
+    uint8_t Vy = (opcode & 0x00F0) >> 4u;
+
+    if (registers[Vx] != registers[Vy])
+    {
+        programCounter += 2;
+    }
+}
+
+void Chip8::OP_ANNN()
+{
+    uint16_t address = opcode & 0x0FFFu;
+
+    programCounter = registers[0] + address;
+}
+
+void Chip8::OP_BNNN()
+{
+    uint16_t address = opcode & 0x0FFFu;
+
+    programCounter = registers[0] + address;
+}
+
+void Chip8::OP_CXKK()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t byte = opcode & 0x00FFu;
+
+    registers[Vx] = randByte(randGen) & byte;
+}
