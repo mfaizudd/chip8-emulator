@@ -55,12 +55,23 @@ public:
     void OP_Fx33();
     void OP_Fx55();
     void OP_Fx65();
+    void OP_NULL();
+    void Table0();
+    void Table8();
+    void TableE();
+    void TableF();
     
 private:
     const unsigned int START_ADDRESS = 0x200;
     const unsigned int VIDEO_WIDTH = 0x40;
     const unsigned int VIDEO_HEIGHT = 0x20;
     void LoadROM(char const* filename);
+    typedef void (Chip8::*Chip8Func)();
+    Chip8Func table[0xF + 1]{&Chip8::OP_NULL};
+    Chip8Func table0[0xE + 1]{&Chip8::OP_NULL};
+    Chip8Func table8[0xE + 1]{&Chip8::OP_NULL};
+    Chip8Func tableE[0xE + 1]{&Chip8::OP_NULL};
+    Chip8Func tableF[0x65 + 1]{&Chip8::OP_NULL};
 };
 
 const unsigned int FONTSET_SIZE = 80;
