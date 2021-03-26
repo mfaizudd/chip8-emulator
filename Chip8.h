@@ -21,6 +21,7 @@ public:
     uint16_t opcode;
     std::default_random_engine randGen;
     std::uniform_int_distribution<uint8_t> randByte;
+    void Cycle();
     void OP_00E0();
     void OP_00EE();
     void OP_1nnn();
