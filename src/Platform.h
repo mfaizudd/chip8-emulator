@@ -1,4 +1,4 @@
-#include "SDL2/SDL_render.h"
+#pragma once
 #include "SDL2/SDL.h"
 
 class Platform

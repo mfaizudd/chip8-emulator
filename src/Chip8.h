@@ -1,13 +1,18 @@
+#pragma once
+
 #include <cstdint>
-#include <fstream>
-#include <chrono>
 #include <random>
-#include <cstring>
 
 class Chip8
 {
 public:
     Chip8();
+    void Cycle();
+    uint32_t video[64 * 32]{};
+    uint8_t keypad[16]{};
+    void LoadROM(char const* filename);
+    
+private:
     uint8_t registers[16]{};
     uint8_t memory[4096]{};
     uint16_t index{};
@@ -16,12 +21,10 @@ public:
     uint8_t stackPointer{};
     uint8_t delayTimer{};
     uint8_t soundTimer{};
-    uint8_t keypad[16]{};
-    uint32_t video[64 * 32]{};
     uint16_t opcode;
     std::default_random_engine randGen;
     std::uniform_int_distribution<uint8_t> randByte;
-    void Cycle();
+    const unsigned int START_ADDRESS = 0x200;
     void OP_00E0();
     void OP_00EE();
     void OP_1nnn();
@@ -61,10 +64,6 @@ public:
     void Table8();
     void TableE();
     void TableF();
-    void LoadROM(char const* filename);
-    
-private:
-    const unsigned int START_ADDRESS = 0x200;
     typedef void (Chip8::*Chip8Func)();
     Chip8Func table[0xF + 1]{&Chip8::OP_NULL};
     Chip8Func table0[0xE + 1]{&Chip8::OP_NULL};
@@ -73,5 +72,5 @@ private:
     Chip8Func tableF[0x65 + 1]{&Chip8::OP_NULL};
 };
 
-const unsigned int VIDEO_WIDTH = 0x40;
-const unsigned int VIDEO_HEIGHT = 0x20;
+const unsigned int VIDEO_WIDTH = 64;
+const unsigned int VIDEO_HEIGHT = 32;

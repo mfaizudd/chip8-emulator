@@ -16,6 +16,7 @@ Platform::~Platform()
     SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    SDL_Quit();
 }
 
 void Platform::Update(void const* buffer, int pitch)

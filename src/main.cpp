@@ -33,7 +33,7 @@ int main(int argc, char** argv)
         auto currentTime = std::chrono::high_resolution_clock::now();
         float deltaTime = std::chrono::duration<float, std::chrono::milliseconds::period>(currentTime - lastCycleTime).count();
 
-        if (deltaTime < cycleDelay)
+        if (deltaTime > cycleDelay)
         {
             lastCycleTime = currentTime;
 
