@@ -48,7 +48,7 @@ Chip8::Chip8() : randGen(std::chrono::system_clock::now().time_since_epoch().cou
     table[0xA] = &Chip8::OP_Annn;
     table[0xB] = &Chip8::OP_Bnnn;
     table[0xC] = &Chip8::OP_Cxkk;
-    table[0xD] = &Chip8::OP_DxyN;
+    table[0xD] = &Chip8::OP_Dxyn;
     table[0xE] = &Chip8::TableE;
     table[0xF] = &Chip8::TableF;
 
@@ -115,7 +115,7 @@ void Chip8::TableE()
 
 void Chip8::TableF()
 {
-    ((*this).*(tableF[opcode & 0x000Fu]))();
+    ((*this).*(tableF[opcode & 0x00FFu]))();
 }
 
 void Chip8::OP_NULL()
@@ -182,7 +182,7 @@ void Chip8::OP_3xkk()
 
 void Chip8::OP_4xkk()
 {
-    uint8_t Vx = (opcode & 0xF00u) >> 8u;
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
     uint8_t byte = opcode & 0x00FFu;
 
     if (registers[Vx] != byte)
@@ -288,7 +288,7 @@ void Chip8::OP_8xy5()
 
 void Chip8::OP_8xy6()
 {
-    uint8_t Vx = (opcode & 0x0F00) >> 8u;
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
 
     registers[0xF] =(registers[Vx] & 0x1u);
 
@@ -297,8 +297,8 @@ void Chip8::OP_8xy6()
 
 void Chip8::OP_8xy7()
 {
-    uint8_t Vx = (opcode & 0x0F00) >> 8u;
-    uint8_t Vy = (opcode & 0x00F0) >> 4u;
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t Vy = (opcode & 0x00F0u) >> 4u;
 
     if (registers[Vy] > registers[Vx])
     {
@@ -323,8 +323,8 @@ void Chip8::OP_8xyE()
 
 void Chip8::OP_9xy0()
 {
-    uint8_t Vx = (opcode & 0x0F00) >> 8u;
-    uint8_t Vy = (opcode & 0x00F0) >> 4u;
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t Vy = (opcode & 0x00F0u) >> 4u;
 
     if (registers[Vx] != registers[Vy])
     {
@@ -354,7 +354,7 @@ void Chip8::OP_Cxkk()
     registers[Vx] = randByte(randGen) & byte;
 }
 
-void Chip8::OP_DxyN()
+void Chip8::OP_Dxyn()
 {
     uint8_t Vx = (opcode & 0x0F00u) >> 8u;
     uint8_t Vy = (opcode & 0x00F0u) >> 4u;
@@ -410,7 +410,7 @@ void Chip8::OP_ExA1()
 
 void Chip8::OP_Fx07()
 {
-    uint8_t Vx = (opcode & 0xF00u) >> 8u;
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
 
     registers[Vx] = delayTimer;
 }
@@ -512,7 +512,7 @@ void Chip8::OP_Fx1E()
 
 void Chip8::OP_Fx29()
 {
-    uint8_t Vx = (opcode & 0x0F00) >> 8u;
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
     uint8_t digit = registers[Vx];
 
     index = FONTSET_START_ADDRESS + (5 * digit);
