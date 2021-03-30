@@ -65,8 +65,6 @@ public:
     
 private:
     const unsigned int START_ADDRESS = 0x200;
-    const unsigned int VIDEO_WIDTH = 0x40;
-    const unsigned int VIDEO_HEIGHT = 0x20;
     typedef void (Chip8::*Chip8Func)();
     Chip8Func table[0xF + 1]{&Chip8::OP_NULL};
     Chip8Func table0[0xE + 1]{&Chip8::OP_NULL};
@@ -74,3 +72,6 @@ private:
     Chip8Func tableE[0xE + 1]{&Chip8::OP_NULL};
     Chip8Func tableF[0x65 + 1]{&Chip8::OP_NULL};
 };
+
+const unsigned int VIDEO_WIDTH = 0x40;
+const unsigned int VIDEO_HEIGHT = 0x20;

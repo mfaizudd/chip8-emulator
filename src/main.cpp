@@ -3,9 +3,6 @@
 #include "Chip8.h"
 #include "Platform.h"
 
-const unsigned int VIDEO_WIDTH = 0x40;
-const unsigned int VIDEO_HEIGHT = 0x20;
-
 int main(int argc, char** argv)
 {
     if (argc != 4)
