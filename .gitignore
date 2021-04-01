@@ -31,8 +31,14 @@
 *.out
 *.app
 
+# Dolphin config
+.directory
+
 # Tests
 /tests
 
 # Builds
-/builds
+[Bb]uild[s]*/
+
+# VS Code directory
+.vscode
